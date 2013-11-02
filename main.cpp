@@ -1,27 +1,17 @@
 #include <iostream>
-#include "core/board.hpp"
+#include "core/game.hpp"
+#include "core/turn.hpp"
 
 int main( int argc, char** argv)
 {
-    harmony::core::board::Board testboard(5);
-    harmony::core::board::Position balance;
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Earth);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
-    testboard(balance, harmony::core::common::Element::Aether);
-    std::cout << balance << std::endl;
+    harmony::core::Game game;
+    std::cout << game << std::endl;
+    for(int i = 0; i<200; ++i)
+    {
+        harmony::core::Turn turn(game, i);
+        turn();
+        std::cout << game << std::endl;
+    }
     return EXIT_SUCCESS;
 }
 
