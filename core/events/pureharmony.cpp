@@ -6,17 +6,17 @@
 
 namespace harmony{ namespace core{ namespace events{
 
-PureHarmony::PureHarmony(Game& game, Player &player, common::Element element):
+PureHarmony::PureHarmony(Game & game, const boost::weak_ptr<Player> & player, common::Element element):
     Event(game),
     player(player),
     element(element)
 {
 }
 
-void PureHarmony::trigger() const
+void PureHarmony::trigger()
 {
-    game.board.operator ()(player.position, element);
-    game.board.operator ()(game.board.balancePoint, element);
+    game.board(player.lock()->position, element);
+    game.board(game.board.balancePoint, element);
 }
 
 }}} // namespaces

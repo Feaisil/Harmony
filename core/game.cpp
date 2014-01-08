@@ -8,7 +8,7 @@ Game::Game():
 {
     for(int i = 0; i< 5; ++i)
     {
-        players.push_back(std::shared_ptr<Player>(new Player()));
+        players.push_back(boost::shared_ptr<Player>(new Player()));
     }
 }
 
@@ -17,7 +17,7 @@ std::ostream& operator<< (std::ostream& stream, const ::harmony::core::Game & ga
     stream << "{ board : "
            << game.board
            << "| players : [ ";
-    for(std::shared_ptr<Player> player: game.players)
+    for(boost::shared_ptr<Player> player: game.players)
     {
         stream << *player
                << " , ";

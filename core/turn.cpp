@@ -5,12 +5,10 @@
 
 namespace harmony{ namespace core{
 
-Turn::Turn(Game & game, unsigned int id):
-    id(id),
-    game(game)
+Turn::Turn(Game& game)
 {
-    std::shared_ptr<events::Event> chooseActionEvent(new events::ChooseAction(game, *this));
-    (*this) <<  chooseActionEvent;
+    boost::shared_ptr<events::Event> chooseActionEvent(new events::ChooseAction(game, *this));
+    (*this) <<( chooseActionEvent);
 }
 
 void Turn::operator ()()
@@ -19,13 +17,13 @@ void Turn::operator ()()
     {
         remainingEvents.front()->trigger();
         executedEvents.push_back(remainingEvents.front());
-        remainingEvents.pop();
+        remainingEvents.pop_front();
     }
     // Todo disharmony
 }
-void Turn::operator<<(std::shared_ptr<events::Event>& event)
+void Turn::operator<<(boost::shared_ptr<events::Event>& event)
 {
-    remainingEvents.push(event);
+    remainingEvents.push_back(event);
 }
 
 //std::ostream& operator<< (std::ostream& stream, const ::harmony::core::Turn & turn)

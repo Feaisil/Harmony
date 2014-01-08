@@ -6,6 +6,9 @@
 #include "core/common.hpp"
 #include "core/game.hpp"
 
+// For random tests
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
 namespace harmony{ namespace core{ namespace events{
 
 ChooseAction::ChooseAction(Game& game, Turn &turn):
@@ -15,40 +18,42 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 }
 
-void ChooseAction::trigger() const
+void ChooseAction::trigger()
 {
-    static int a = 0;//REMOVE
-    for(std::shared_ptr<Player> player: game.players)
+    static boost::random::mt19937 gen;
+    static boost::random::uniform_int_distribution<> dist(0, 4);
+    int decision = dist(gen);//REMOVE
+
+    for(boost::shared_ptr<Player> player: game.players)
     {
         // TODO Query player
         // TODO Enqueue Action
-        // TODO REMOVE BELOW
-        if( a % 6 == 0 )
+
+        if( decision == 0 )
         {
-            std::shared_ptr<Event> event(new PureHarmony(game, *player, common::Element::Aether));
+            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Aether));
             turn << event;
         }
-        if( a % 7 == 1 )
+        if( decision == 1 )
         {
-            std::shared_ptr<Event> event(new PureHarmony(game, *player, common::Element::Fire));
+            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Fire));
             turn << event;
         }
-        if( a % 8 == 2 )
+        if( decision == 2 )
         {
-            std::shared_ptr<Event> event(new PureHarmony(game, *player, common::Element::Earth));
+            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Earth));
             turn << event;
         }
-        if( a % 9 == 3 )
+        if( decision == 3 )
         {
-            std::shared_ptr<Event> event(new PureHarmony(game, *player, common::Element::Water));
+            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Water));
             turn << event;
         }
-        if( a % 10 == 4 )
+        if( decision == 4 )
         {
-            std::shared_ptr<Event> event(new PureHarmony(game, *player, common::Element::Wind));
+            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Wind));
             turn << event;
         }
-        ++a;
     }
 }
 

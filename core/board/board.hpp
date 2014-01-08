@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+
 #include "core/common.hpp"
 #include "position.hpp"
 
@@ -31,6 +32,14 @@ private:
     unsigned int size;
 
     friend class events::PureHarmony;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & BOOST_SERIALIZATION_NVP(balancePoint);
+        ar & BOOST_SERIALIZATION_NVP(size);
+    }
     friend std::ostream& operator<< (std::ostream& stream, const Board & board);
 };
 }}}

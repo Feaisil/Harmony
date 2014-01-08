@@ -20,6 +20,13 @@ private:
     friend class events::Event;
     friend class events::PureHarmony;
 
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & BOOST_SERIALIZATION_NVP(position);
+    }
+
     friend std::ostream& operator<< (std::ostream& stream, const Player & player);
 };
 

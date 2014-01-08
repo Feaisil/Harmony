@@ -8,18 +8,19 @@ namespace harmony{ namespace core{
 class Player;
 
 namespace events{
-class ChooseAction;
+class AddChosenAction;
 
 class PureHarmony : public Event
 {
+public:
+    PureHarmony(Game & game, const boost::weak_ptr<Player> & player, common::Element element);
 private:
-    PureHarmony(Game& game, Player &player, common::Element element);
-    virtual void trigger() const;
+    virtual void trigger();
 private:
-    Player &player;
+    const boost::weak_ptr<Player> player;
     common::Element element;
 
-    friend class ChooseAction;
+    friend class AddChosenAction;
 };
 
 }}} // namespaces
