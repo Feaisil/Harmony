@@ -2,6 +2,9 @@
 
 #include <memory>
 #include <iostream>
+
+#include <boost/serialization/nvp.hpp>
+
 #include "core/common.hpp"
 
 namespace harmony{ namespace core{ namespace board{
@@ -33,6 +36,14 @@ private:
     size_t index;
 
     friend class Board;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & BOOST_SERIALIZATION_NVP(direction);
+        ar & BOOST_SERIALIZATION_NVP(index);
+    }
     friend std::ostream& operator<< (std::ostream& stream, const Position::Direction &dir);
     friend std::ostream& operator<< (std::ostream& stream, const Position &pos);
 };
