@@ -1,0 +1,7 @@
+
+syntax: regexp
+.*\.(o|exe|dll|so|a)
+Harmony.pro.user.*
+Makefile.*
+harmony-boardgame.pro.user
+object_script.Harmony.*
