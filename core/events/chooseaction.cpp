@@ -22,10 +22,11 @@ void ChooseAction::trigger()
 {
     static boost::random::mt19937 gen;
     static boost::random::uniform_int_distribution<> dist(0, 4);
-    int decision = dist(gen);//REMOVE
+
 
     for(boost::shared_ptr<Player> player: game.players)
     {
+        int decision = dist(gen);//REMOVE
         // TODO Query player
         // TODO Enqueue Action
 
