@@ -44,8 +44,6 @@ private:
         ar & BOOST_SERIALIZATION_NVP(direction);
         ar & BOOST_SERIALIZATION_NVP(index);
     }
-    friend std::ostream& operator<< (std::ostream& stream, const Position::Direction &dir);
-    friend std::ostream& operator<< (std::ostream& stream, const Position &pos);
 };
 
 }}} // namespaces

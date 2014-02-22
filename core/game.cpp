@@ -12,19 +12,4 @@ Game::Game():
     }
 }
 
-std::ostream& operator<< (std::ostream& stream, const ::harmony::core::Game & game)
-{
-    stream << "{ board : "
-           << game.board
-           << "| players : [ ";
-    for(boost::shared_ptr<Player> player: game.players)
-    {
-        stream << *player
-               << " , ";
-    }
-    stream << " ] }";
-
-    return stream;
-}
-
 }}

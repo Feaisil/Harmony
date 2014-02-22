@@ -1,6 +1,10 @@
 #pragma once
 
 #include "board/position.hpp"
+#include "harmonycard.hpp"
+
+#include <list>
+#include <boost/shared_ptr.hpp>
 
 namespace harmony{ namespace core{
 
@@ -9,6 +13,11 @@ class Event;
 class PureHarmony;
 }
 
+struct PlayerSettings
+{
+
+};
+
 class Player
 {
 public:
@@ -16,6 +25,11 @@ public:
 
 private:
     board::Position position;
+    std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
+    std::list<boost::shared_ptr<HarmonyCard>> playerBoard;
+    int money;
+    int stock;
+    PlayerSettings settings;
 
     friend class events::Event;
     friend class events::PureHarmony;
@@ -27,7 +41,6 @@ private:
         ar & BOOST_SERIALIZATION_NVP(position);
     }
 
-    friend std::ostream& operator<< (std::ostream& stream, const Player & player);
 };
 
 }}

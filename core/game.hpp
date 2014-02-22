@@ -2,6 +2,8 @@
 
 #include "board/board.hpp"
 #include "player.hpp"
+#include "harmonycard.hpp"
+#include "disharmonycard.hpp"
 
 #include <list>
 #include <memory>
@@ -28,6 +30,10 @@ public:
 private:
     std::list<boost::shared_ptr<Player>> players;
     board::Board board;
+    std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
+    std::list<boost::shared_ptr<HarmonyCard>> harmonyDiscard;
+    std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDeck;
+    std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDiscard;
 
     friend class Turn;
     friend class events::Event;
@@ -42,7 +48,6 @@ private:
         ar & BOOST_SERIALIZATION_NVP(board);
     }
 
-    friend std::ostream& operator<< (std::ostream& stream, const Game & game);
 };
 
 }}

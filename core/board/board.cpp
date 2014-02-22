@@ -15,16 +15,5 @@ void Board::operator()(Position& position, common::Element element) const
     }
 }
 
-std::ostream& operator<< (std::ostream& stream, const ::harmony::core::board::Board & board)
-{
-    stream << "{ balancePoint : "
-           << board.balancePoint
-           << "| size : "
-           << board.size
-           << " }";
-
-    return stream;
-}
-
 }}} // namespaces
 

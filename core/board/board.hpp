@@ -40,6 +40,5 @@ private:
         ar & BOOST_SERIALIZATION_NVP(balancePoint);
         ar & BOOST_SERIALIZATION_NVP(size);
     }
-    friend std::ostream& operator<< (std::ostream& stream, const Board & board);
 };
 }}}

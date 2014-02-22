@@ -26,15 +26,4 @@ void Turn::operator<<(boost::shared_ptr<events::Event>& event)
     remainingEvents.push_back(event);
 }
 
-//std::ostream& operator<< (std::ostream& stream, const ::harmony::core::Turn & turn)
-//{
-//    stream << "{ /*remainingEvents : "
-//           << turn.remainingEvents
-//           << " | executedEvents : "
-//           << turn.executedEvents
-//           << " }*/";
-
-//    return stream;
-//}
-
 }} //namespaces

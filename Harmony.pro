@@ -16,7 +16,10 @@ SOURCES += main.cpp \
     core/turn.cpp \
     core/game.cpp \
     core/player.cpp \
-    core/engine.cpp
+    core/engine.cpp \
+    core/harmonycard.cpp \
+    core/disharmonycard.cpp \
+    core/card.cpp
 
 HEADERS += \
     core/board/board.hpp \
@@ -28,6 +31,9 @@ HEADERS += \
     core/turn.hpp \
     core/game.hpp \
     core/player.hpp \
-    core/engine.hpp
+    core/engine.hpp \
+    core/harmonycard.hpp \
+    core/disharmonycard.hpp \
+    core/card.hpp
 
 LIBS += -lboost_serialization-mgw48-mt-1_55
