@@ -5,7 +5,7 @@
 
 #include <boost/serialization/nvp.hpp>
 
-#include "core/common.hpp"
+#include "core/element.hpp"
 
 namespace harmony{ namespace core{ namespace board{
 
