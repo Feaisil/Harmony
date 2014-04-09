@@ -2,7 +2,9 @@
 
 namespace harmony{ namespace core{
 
-Player::Player()
+Player::Player():
+    money(0),
+    stock(0)
 {
 }
 

@@ -11,6 +11,7 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/list.hpp>
+#include <boost/serialization/vector.hpp>
 
 namespace harmony{ namespace core{
 
@@ -28,7 +29,7 @@ public:
     Game();
 
 private:
-    std::list<boost::shared_ptr<Player>> players;
+    std::vector<boost::shared_ptr<Player>> players;
     board::Board board;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDiscard;
@@ -39,6 +40,7 @@ private:
     friend class events::Event;
     friend class events::ChooseAction;
     friend class events::PureHarmony;
+    friend class Player;
 
     friend class boost::serialization::access;
     template<class Archive>

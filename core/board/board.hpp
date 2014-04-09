@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "core/common.hpp"
+#include "core/element.hpp"
 #include "position.hpp"
 
 namespace harmony{ namespace core{
