@@ -9,6 +9,10 @@
 // For random tests
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
+
+// TODO remove
+#include <chrono>
+#include <thread>
 namespace harmony{ namespace core{ namespace events{
 
 struct DoChooseAction
@@ -22,6 +26,7 @@ struct DoChooseAction
 
     _returnType operator()(boost::shared_ptr<Player> & player, _argumentType& args)
     {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // not working or not called ?
         static boost::random::mt19937 gen;
         static boost::random::uniform_int_distribution<> dist(0, 4);
 
@@ -61,7 +66,7 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 void ChooseAction::trigger()
 {
-    SimultaneousQuery<DoChooseAction> query;
+    SimultaneousQuery<DoChooseAction, false> query;
     DoChooseAction::Args args;
     std::vector<typename DoChooseAction::_returnType> result = query(game.players, args);
     for(size_t index = 0; index < game.players.size(); ++index)

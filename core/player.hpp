@@ -51,11 +51,11 @@ struct SimultaneousQuery
 {
     const std::vector<typename Functor::_returnType >& operator()(std::vector<boost::shared_ptr<Player> > &players, typename Functor::_argumentType& argument)
     {
-        result.reserve(players.size());
+        result.assign(players.size(), typename Functor::_returnType() );
         boost::thread_group threads;
         for(size_t index = 0; index < players.size(); ++index)
         {
-            if(isParallel)
+            if(not isParallel)
             {
                 this->operator ()(index, players[index], argument);
             }
@@ -74,6 +74,7 @@ struct SimultaneousQuery
 
     void operator()(size_t index, boost::shared_ptr<Player> &player, typename Functor::_argumentType& argument)
     {
+        std::cout<< "thread: " << boost::this_thread::get_id() << " index " << index << std::endl;
         Functor f;
         result[index] = f(player, argument);
     }
