@@ -36,4 +36,5 @@ HEADERS += \
     core/card.hpp \
     core/element.hpp
 
-LIBS += -lboost_serialization-mgw48-mt-1_55
+LIBS += -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
+# maybe add boost system...
