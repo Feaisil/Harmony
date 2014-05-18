@@ -3,13 +3,60 @@
 
 #include "core/turn.hpp"
 #include "core/player.hpp"
-#include "core/common.hpp"
+#include "core/element.hpp"
 #include "core/game.hpp"
 
 // For random tests
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
+
+// TODO remove
+#include <chrono>
+#include <thread>
 namespace harmony{ namespace core{ namespace events{
+
+struct DoChooseAction
+{
+    struct Args
+    {
+
+    };
+    typedef Args _argumentType;
+    typedef common::Element _returnType;
+
+    _returnType operator()(boost::shared_ptr<Player> & player, _argumentType& args)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // not working or not called ?
+        static boost::random::mt19937 gen;
+        static boost::random::uniform_int_distribution<> dist(0, 4);
+
+
+        int decision = dist(gen);//REMOVE
+
+        std::cout<< "thread: " << boost::this_thread::get_id() << " decision " << decision << std::endl;
+        if( decision == 0 )
+        {
+            return common::Element::Aether;
+        }
+        if( decision == 1 )
+        {
+            return common::Element::Fire;
+        }
+        if( decision == 2 )
+        {
+            return common::Element::Earth;
+        }
+        if( decision == 3 )
+        {
+            return common::Element::Water;
+        }
+        if( decision == 4 )
+        {
+            return common::Element::Wind;
+        }
+    }
+
+};
 
 ChooseAction::ChooseAction(Game& game, Turn &turn):
     Event(game),
@@ -20,41 +67,13 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 void ChooseAction::trigger()
 {
-    static boost::random::mt19937 gen;
-    static boost::random::uniform_int_distribution<> dist(0, 4);
-
-
-    for(boost::shared_ptr<Player> player: game.players)
+    SimultaneousQuery<DoChooseAction, true> query;
+    DoChooseAction::Args args;
+    std::vector<typename DoChooseAction::_returnType> result = query(game.players, args);
+    for(size_t index = 0; index < game.players.size(); ++index)
     {
-        int decision = dist(gen);//REMOVE
-        // TODO Query player
-        // TODO Enqueue Action
-
-        if( decision == 0 )
-        {
-            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Aether));
-            turn << event;
-        }
-        if( decision == 1 )
-        {
-            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Fire));
-            turn << event;
-        }
-        if( decision == 2 )
-        {
-            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Earth));
-            turn << event;
-        }
-        if( decision == 3 )
-        {
-            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Water));
-            turn << event;
-        }
-        if( decision == 4 )
-        {
-            boost::shared_ptr<Event> event(new PureHarmony(game, player, common::Element::Wind));
-            turn << event;
-        }
+        boost::shared_ptr<Event> event(new PureHarmony(game, game.players[index], result[index]));
+        turn << event;
     }
 }
 
