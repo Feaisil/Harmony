@@ -64,7 +64,7 @@ struct SimultaneousQuery
                 threads.add_thread(new boost::thread(*this, index, players[index], argument));
             }
         }
-        if(not isParallel)
+        if(isParallel)
         {
             threads.join_all();
         }
@@ -74,7 +74,6 @@ struct SimultaneousQuery
 
     void operator()(size_t index, boost::shared_ptr<Player> &player, typename Functor::_argumentType& argument)
     {
-        std::cout<< "thread: " << boost::this_thread::get_id() << " index " << index << std::endl;
         Functor f;
         result[index] = f(player, argument);
     }
