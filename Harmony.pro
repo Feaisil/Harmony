@@ -12,14 +12,14 @@ SOURCES += main.cpp \
     core/events/event.cpp \
     core/events/chooseaction.cpp \
     core/events/pureharmony.cpp \
-    core/common.cpp \
     core/turn.cpp \
     core/game.cpp \
     core/player.cpp \
     core/engine.cpp \
     core/harmonycard.cpp \
     core/disharmonycard.cpp \
-    core/card.cpp
+    core/card.cpp \
+    core/element.cpp
 
 HEADERS += \
     core/board/board.hpp \
@@ -27,14 +27,14 @@ HEADERS += \
     core/events/event.hpp \
     core/events/chooseaction.hpp \
     core/events/pureharmony.hpp \
-    core/common.hpp \
     core/turn.hpp \
     core/game.hpp \
     core/player.hpp \
     core/engine.hpp \
     core/harmonycard.hpp \
     core/disharmonycard.hpp \
-    core/card.hpp
+    core/card.hpp \
+    core/element.hpp
 
-win32:LIBS += -lboost_serialization-mgw48-mt-1_55
+win32:LIBS += -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
 unix: LIBS += -lboost_serialization

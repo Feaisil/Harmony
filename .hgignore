@@ -5,3 +5,5 @@ Harmony.pro.user.*
 Makefile.*
 harmony-boardgame.pro.user
 object_script.Harmony.*
+syntax: glob
+Boost/*

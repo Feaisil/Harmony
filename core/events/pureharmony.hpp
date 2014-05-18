@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/common.hpp"
+#include "core/element.hpp"
 #include "event.hpp"
 
 namespace harmony{ namespace core{
