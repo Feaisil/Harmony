@@ -33,6 +33,7 @@ struct DoChooseAction
 
         int decision = dist(gen);//REMOVE
 
+        std::cout<< "thread: " << boost::this_thread::get_id() << " decision " << decision << std::endl;
         if( decision == 0 )
         {
             return common::Element::Aether;
@@ -66,7 +67,7 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 void ChooseAction::trigger()
 {
-    SimultaneousQuery<DoChooseAction, false> query;
+    SimultaneousQuery<DoChooseAction, true> query;
     DoChooseAction::Args args;
     std::vector<typename DoChooseAction::_returnType> result = query(game.players, args);
     for(size_t index = 0; index < game.players.size(); ++index)
