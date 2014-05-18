@@ -5,6 +5,7 @@
 
 #include <list>
 #include <boost/shared_ptr.hpp>
+#include <boost/serialization/list.hpp>
 
 namespace harmony{ namespace core{
 
@@ -16,6 +17,12 @@ class PureHarmony;
 struct PlayerSettings
 {
 
+private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    { 
+    }
 };
 
 class Player
@@ -39,6 +46,11 @@ private:
     void serialize(Archive & ar, const unsigned int version)
     {
         ar & BOOST_SERIALIZATION_NVP(position);
+	ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
+	ar & BOOST_SERIALIZATION_NVP(playerBoard);
+	ar & BOOST_SERIALIZATION_NVP(money);
+	ar & BOOST_SERIALIZATION_NVP(stock);
+	ar & BOOST_SERIALIZATION_NVP(settings);
     }
 
 };

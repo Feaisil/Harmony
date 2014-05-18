@@ -46,6 +46,10 @@ private:
     {
         ar & BOOST_SERIALIZATION_NVP(players);
         ar & BOOST_SERIALIZATION_NVP(board);
+        ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
+        ar & BOOST_SERIALIZATION_NVP(harmonyDiscard);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDeck);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDiscard);
     }
 
 };

@@ -36,4 +36,5 @@ HEADERS += \
     core/disharmonycard.hpp \
     core/card.hpp
 
-LIBS += -lboost_serialization-mgw48-mt-1_55
+win32:LIBS += -lboost_serialization-mgw48-mt-1_55
+unix: LIBS += -lboost_serialization
