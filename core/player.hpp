@@ -61,19 +61,20 @@ private:
 template <typename Functor, bool isParallel = false>
 struct SimultaneousQuery
 {
-    const std::vector<typename Functor::_returnType >& operator()(std::vector<boost::shared_ptr<Player> > &players, typename Functor::_argumentType& argument)
+    std::vector<typename Functor::_returnType > operator()(std::vector<boost::shared_ptr<Player> > &players, typename Functor::_argumentType& argument)
     {
+        std::vector<typename Functor::_returnType > result;
         result.assign(players.size(), typename Functor::_returnType() );
         boost::thread_group threads;
         for(size_t index = 0; index < players.size(); ++index)
         {
             if(not isParallel)
             {
-                this->operator ()(index, players[index], argument);
+                this->operator ()(index, players[index], argument, &result);
             }
             else
             {
-                threads.add_thread(new boost::thread(*this, index, players[index], argument));
+                threads.add_thread(new boost::thread(*this, index, players[index], argument, &result));
             }
         }
         if(isParallel)
@@ -82,12 +83,11 @@ struct SimultaneousQuery
         }
         return result;
     }
-    std::vector<typename Functor::_returnType > result;
 
-    void operator()(size_t index, boost::shared_ptr<Player> &player, typename Functor::_argumentType& argument)
+    void operator()(size_t index, boost::shared_ptr<Player> &player, typename Functor::_argumentType& argument, std::vector<typename Functor::_returnType > *result)
     {
         Functor f;
-        result[index] = f(player, argument);
+        (*result)[index] = f(player, argument);
     }
 };
 
