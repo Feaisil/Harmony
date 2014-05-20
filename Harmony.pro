@@ -4,7 +4,7 @@ CONFIG -= qt
 CONFIG += c++11
 
 QMAKE_CXXFLAGS += -std=c++11
-INCLUDEPATH += .
+INCLUDEPATH += . .\boost
 
 SOURCES += main.cpp \
     core/board/board.cpp \
@@ -36,5 +36,5 @@ HEADERS += \
     core/card.hpp \
     core/element.hpp
 
-win32:LIBS += -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
+win32:LIBS += -Lboost\lib -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
 unix: LIBS += -lboost_serialization
