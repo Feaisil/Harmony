@@ -7,7 +7,10 @@
 
 #include "core/element.hpp"
 
-namespace harmony{ namespace core{ namespace board{
+namespace harmony{ namespace core{
+class Engine;
+
+namespace board{
 
 class Board;
 
@@ -15,11 +18,13 @@ struct Position
 {
 public:
     Position();
-private:
     /** Update with an input element */
     void operator()(common::Element element);
 
 private:
+
+    friend class Board;
+    friend class harmony::core::Engine;
     enum class Direction{
         Center,
         Fire,
@@ -34,8 +39,6 @@ private:
         EarthFire
     } direction;
     size_t index;
-
-    friend class Board;
 
     friend class boost::serialization::access;
     template<class Archive>

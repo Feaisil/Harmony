@@ -3,7 +3,7 @@ CONFIG += console
 CONFIG -= qt
 CONFIG += c++11
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -Wunused-local-typedefs -Wunused-variable
 INCLUDEPATH += . .\boost
 
 SOURCES += main.cpp \
@@ -19,7 +19,11 @@ SOURCES += main.cpp \
     core/harmonycard.cpp \
     core/disharmonycard.cpp \
     core/card.cpp \
-    core/element.cpp
+    core/element.cpp \
+    core/settings.cpp \
+    interface/commandlineinterface.cpp \
+    core/interface/playerinterface.cpp \
+    core/interface/settinginterface.cpp
 
 HEADERS += \
     core/board/board.hpp \
@@ -34,7 +38,11 @@ HEADERS += \
     core/harmonycard.hpp \
     core/disharmonycard.hpp \
     core/card.hpp \
-    core/element.hpp
+    core/element.hpp \
+    core/settings.hpp \
+    interface/commandlineinterface.hpp \
+    core/interface/playerinterface.hpp \
+    core/interface/settinginterface.hpp
 
-win32:LIBS += -Lboost\lib -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
+win32:LIBS += -L"F:\home\feaisil\Developments\harmony-boardgame\boost\lib" -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
 unix: LIBS += -lboost_serialization

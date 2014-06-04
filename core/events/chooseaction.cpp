@@ -26,14 +26,12 @@ struct DoChooseAction
 
     _returnType operator()(boost::shared_ptr<Player> & player, _argumentType& args)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // not working or not called ?
         static boost::random::mt19937 gen;
         static boost::random::uniform_int_distribution<> dist(0, 4);
 
 
-        int decision = dist(gen);//REMOVE
+        int decision = dist(gen);//TODO Replace by call to player interface
 
-        std::cout<< "thread: " << boost::this_thread::get_id() << " decision " << decision << std::endl;
         if( decision == 0 )
         {
             return common::Element::Fire;
@@ -67,12 +65,11 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 void ChooseAction::trigger()
 {
-    SimultaneousQuery<DoChooseAction,  true> query;
+    SimultaneousQuery<DoChooseAction> query (game.settings.isParallel);
     DoChooseAction::Args args;
     std::vector<typename DoChooseAction::_returnType> result = query(game.players, args);
     for(size_t index = 0; index < game.players.size(); ++index)
     {
-        std::cout << " id " << int(index) << " res: " << int(result[index]);
         boost::shared_ptr<Event> event(new PureHarmony(game, game.players[index], result[index]));
         turn << event;
     }
