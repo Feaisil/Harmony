@@ -1,5 +1,6 @@
 #pragma once
 
+#include "settings.hpp"
 #include "board/position.hpp"
 #include "harmonycard.hpp"
 
@@ -11,56 +12,75 @@
 
 namespace harmony{ namespace core{
 
-class Game;
 namespace events{
 class Event;
 class PureHarmony;
 }
 
-struct PlayerSettings
-{
+class Player;
+class Game;
+class Setting;
 
+class PlayerSetting
+{
+public:
+    std::string name;
+    common::Element element;
 private:
+    friend class SettingInterface;
+    friend class Player;
+
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int version)
-    { 
+    {
+        ar & BOOST_SERIALIZATION_NVP(name);
+        ar & BOOST_SERIALIZATION_NVP(element);
     }
 };
 
 class Player
 {
 public:
-    Player();
+    Player(const Setting &settings, const PlayerSetting &playerSettings);
 
 private:
     board::Position position;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
     std::list<boost::shared_ptr<HarmonyCard>> playerBoard;
-    int money;
-    int stock;
-    PlayerSettings settings;
+    short energy;
+    short beverage;
+    short meal;
+    short score;
+
+    PlayerSetting settings;
 
     friend class events::Event;
     friend class events::PureHarmony;
+    friend class Game;
+    friend class Engine;
 
+    Player(){}
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int version)
     {
         ar & BOOST_SERIALIZATION_NVP(position);
-	ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
-	ar & BOOST_SERIALIZATION_NVP(playerBoard);
-	ar & BOOST_SERIALIZATION_NVP(money);
-	ar & BOOST_SERIALIZATION_NVP(stock);
-	ar & BOOST_SERIALIZATION_NVP(settings);
+        ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
+        ar & BOOST_SERIALIZATION_NVP(playerBoard);
+        ar & BOOST_SERIALIZATION_NVP(energy);
+        ar & BOOST_SERIALIZATION_NVP(beverage);
+        ar & BOOST_SERIALIZATION_NVP(meal);
+        ar & BOOST_SERIALIZATION_NVP(settings);
     }
 
 };
 
-template <typename Functor, bool isParallel = false>
+template <typename Functor>
 struct SimultaneousQuery
 {
+    SimultaneousQuery(bool isParallel = false):isParallel(isParallel){}
+
     std::vector<typename Functor::_returnType > operator()(std::vector<boost::shared_ptr<Player> > &players, typename Functor::_argumentType& argument)
     {
         std::vector<typename Functor::_returnType > result;
@@ -83,12 +103,13 @@ struct SimultaneousQuery
         }
         return result;
     }
-
     void operator()(size_t index, boost::shared_ptr<Player> &player, typename Functor::_argumentType& argument, std::vector<typename Functor::_returnType > *result)
     {
         Functor f;
         (*result)[index] = f(player, argument);
     }
+private:
+    const bool isParallel;
 };
 
 }}

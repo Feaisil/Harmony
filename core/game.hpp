@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "harmonycard.hpp"
 #include "disharmonycard.hpp"
+#include "settings.hpp"
 
 #include <list>
 #include <memory>
@@ -16,6 +17,7 @@
 namespace harmony{ namespace core{
 
 class Turn;
+class Setting;
 
 namespace events{
 class Event;
@@ -26,9 +28,11 @@ class PureHarmony;
 class Game
 {
 public:
-    Game();
+    Game(const Setting& settings);
 
 private:
+    Setting settings;
+
     std::vector<boost::shared_ptr<Player>> players;
     board::Board board;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
@@ -41,11 +45,15 @@ private:
     friend class events::ChooseAction;
     friend class events::PureHarmony;
     friend class Player;
+    friend class Engine;
 
+    Game(): board(0){}
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int version)
     {
+        ar & BOOST_SERIALIZATION_NVP(settings);
+
         ar & BOOST_SERIALIZATION_NVP(players);
         ar & BOOST_SERIALIZATION_NVP(board);
         ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
