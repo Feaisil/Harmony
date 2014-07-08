@@ -4,6 +4,8 @@
 #include "board/position.hpp"
 #include "harmonycard.hpp"
 
+#include "interface/playerinterface.hpp"
+
 #include <list>
 #include <vector>
 #include <boost/shared_ptr.hpp>
@@ -17,6 +19,10 @@ class Event;
 class PureHarmony;
 }
 
+namespace interface{
+class PlayerInterface;
+}
+
 class Player;
 class Game;
 class Setting;
@@ -24,12 +30,16 @@ class Setting;
 class PlayerSetting
 {
 public:
+    PlayerSetting(interface::PlayerInterface* interface);
     std::string name;
     common::Element element;
+
+    const interface::PlayerInterface* interface;
 private:
     friend class SettingInterface;
     friend class Player;
 
+    PlayerSetting(){}
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int version)
@@ -44,6 +54,7 @@ class Player
 public:
     Player(const Setting &settings, const PlayerSetting &playerSettings);
 
+    const PlayerSetting& accessSettings() const{ return settings; }
 private:
     board::Position position;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
@@ -59,6 +70,7 @@ private:
     friend class events::PureHarmony;
     friend class Game;
     friend class Engine;
+    friend class PlayerInterface;
 
     Player(){}
     friend class boost::serialization::access;

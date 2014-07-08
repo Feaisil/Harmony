@@ -25,6 +25,7 @@ short startingMeal;
 short maxMeal;
 short mealProductionRate;
 short mealProductionEnergyCost;
+
 Setting::Setting():
     isParallel(false),
 

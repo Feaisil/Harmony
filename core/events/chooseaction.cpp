@@ -26,32 +26,33 @@ struct DoChooseAction
 
     _returnType operator()(boost::shared_ptr<Player> & player, _argumentType& args)
     {
-        static boost::random::mt19937 gen;
-        static boost::random::uniform_int_distribution<> dist(0, 4);
+        return player->accessSettings().interface->choosePureHarmony(player);
+//        static boost::random::mt19937 gen;
+//        static boost::random::uniform_int_distribution<> dist(0, 4);
 
 
-        int decision = dist(gen);//TODO Replace by call to player interface
+//        int decision = dist(gen);//TODO Replace by call to player interface
 
-        if( decision == 0 )
-        {
-            return common::Element::Fire;
-        }
-        if( decision == 1 )
-        {
-            return common::Element::Wind;
-        }
-        if( decision == 2 )
-        {
-            return common::Element::Water;
-        }
-        if( decision == 3 )
-        {
-            return common::Element::Aether;
-        }
-        if( decision == 4 )
-        {
-            return common::Element::Earth;
-        }
+//        if( decision == 0 )
+//        {
+//            return common::Element::Fire;
+//        }
+//        if( decision == 1 )
+//        {
+//            return common::Element::Wind;
+//        }
+//        if( decision == 2 )
+//        {
+//            return common::Element::Water;
+//        }
+//        if( decision == 3 )
+//        {
+//            return common::Element::Aether;
+//        }
+//        if( decision == 4 )
+//        {
+//            return common::Element::Earth;
+//        }
     }
 
 };
