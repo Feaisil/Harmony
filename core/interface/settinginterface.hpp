@@ -8,8 +8,10 @@ class SettingInterface
 {
 public:
     SettingInterface();
-private:
+
     harmony::core::Setting settings;
+
+
 };
 
 }}}

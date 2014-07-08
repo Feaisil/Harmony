@@ -9,6 +9,14 @@ class CommandLineInterface : public harmony::core::interface::PlayerInterface, p
 {
 public:
     CommandLineInterface();
+
+    void getNumberOfPlayers();
+    void getPlayerSettings();
+
+    void operator()();
+
+    core::common::Element choosePureHarmony(boost::shared_ptr<harmony::core::Player> & player) const;
+
 };
 
 }}

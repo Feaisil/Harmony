@@ -2,6 +2,12 @@
 
 namespace harmony{ namespace core{
 
+PlayerSetting::PlayerSetting(interface::PlayerInterface *interface):
+    interface(interface)
+{
+
+}
+
 Player::Player(const Setting &settings, const PlayerSetting &playersSettings):
     energy(settings.startingEnergy),
     beverage(settings.startingBeverage),

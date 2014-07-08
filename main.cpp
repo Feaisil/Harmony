@@ -5,6 +5,7 @@
 
 #include "core/engine.hpp"
 #include "core/settings.hpp"
+#include "interface/commandlineinterface.hpp"
 
 int main( int argc, char** argv)
 {
@@ -16,31 +17,15 @@ int main( int argc, char** argv)
         boost::archive::xml_oarchive arcInit(logInit), arcFinal(logFinal);
         //boost::archive::binary_oarchive arcInit(logInit), arcFinal(logFinal);
 
-        harmony::core::Setting settings;
-        settings.distanceFromStart = 2;
-        settings.numberOfPlayers = 3;
-        settings.isParallel = false;
+        boost::shared_ptr<harmony::interface::CommandLineInterface> interface(new harmony::interface::CommandLineInterface());
 
-        harmony::core::PlayerSetting playerSetting1;
-        playerSetting1.name = "Fanny";
-        playerSetting1.element = harmony::core::common::Element::Water;
-        settings.playersSettings.push_back(playerSetting1);
+        (*interface)();
 
-        harmony::core::PlayerSetting playerSetting2;
-        playerSetting2.name = "Paris";
-        playerSetting2.element = harmony::core::common::Element::Fire;
-        settings.playersSettings.push_back(playerSetting2);
-
-        harmony::core::PlayerSetting playerSetting3;
-        playerSetting3.name = "Blatte";
-        playerSetting3.element = harmony::core::common::Element::Aether;
-        settings.playersSettings.push_back(playerSetting3);
-
-        harmony::core::Engine engine(settings);
+        harmony::core::Engine engine(interface->settings);
 
         arcInit << BOOST_SERIALIZATION_NVP(engine);
 
-        engine(100);
+        engine(5);
 
         arcFinal << BOOST_SERIALIZATION_NVP(engine);
 

@@ -2,17 +2,19 @@
 
 #include <list>
 #include <boost/serialization/nvp.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "player.hpp"
 
 namespace harmony{ namespace core{
+
 class PlayerSetting;
 
 class Setting
 {
     // TODO DELETE public
 public:
-    std::list<PlayerSetting> playersSettings;
+    std::list<boost::shared_ptr<harmony::core::PlayerSetting> > playersSettings;
     bool isParallel;
 
     short harmonyInHand;
