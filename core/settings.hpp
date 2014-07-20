@@ -42,8 +42,15 @@ public:
     short mealProductionEnergyCost;
 
     short EofDisharmony; // ?
+
+    static const std::string defaultFilePath;
 public:
     Setting();
+
+    bool load();
+    bool load(const std::string & filePath);
+    bool save();
+    bool save(const std::string & filePath);
 
     // Access
     friend class Game;

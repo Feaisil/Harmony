@@ -14,6 +14,10 @@ void Board::operator()(Position& position, common::Element element) const
         position(element);
     }
 }
+const BalancePoint &Board::getBalancePoint() const
+{
+    return balancePoint;
+}
 
 }}} // namespaces
 

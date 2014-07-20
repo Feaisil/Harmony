@@ -55,6 +55,7 @@ public:
     Player(const Setting &settings, const PlayerSetting &playerSettings);
 
     const PlayerSetting& accessSettings() const{ return settings; }
+    const board::Position& getPosition() const;
 private:
     board::Position position;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;

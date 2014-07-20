@@ -1,31 +1,15 @@
 #include "settings.hpp"
 
+#include <fstream>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+//#include <boost/archive/binary_oarchive.hpp>
+//#include <boost/archive/binary_iarchive.hpp>
+
 namespace harmony{ namespace core{
 
-std::list<PlayerSetting> playersSettings;
-short boardSize;
-short distanceFromStart;
-short numberOfPlayers;
-bool isParallel;
-
-short startingEnergy;
-short maxEnergy;
-short restEnergyRate;
-short feedingEnergyRate;
-short feedingBeverageCost;
-short feedingMealCost;
-short passiveEnergyResplenishmentRate;
-
-short startingBeverage;
-short maxBeverage;
-short beverageProductionRate;
-short beverageProductionEnergyCost;
-
-short startingMeal;
-short maxMeal;
-short mealProductionRate;
-short mealProductionEnergyCost;
-
+const std::string Setting::defaultFilePath("harmony.config");
 Setting::Setting():
     isParallel(false),
 
@@ -54,5 +38,45 @@ Setting::Setting():
 
     EofDisharmony(0)
 {}
+
+bool Setting::load()
+{
+    return load(defaultFilePath);
+}
+
+bool Setting::load(const std::string & filePath)
+{
+    std::ifstream settingsFile;
+    settingsFile.open (filePath);
+    try
+    {
+        boost::archive::xml_iarchive arc(settingsFile);
+        arc >> boost::serialization::make_nvp("Setting", *this );
+    }
+    catch(const boost::archive::archive_exception &e)
+    {
+        // An error occured while decoding the archive, logging to cerr and continuins
+        std::cerr << "Failed to read file " << filePath << "! Got archive error: " << e.what() << "." << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool Setting::save()
+{
+    return save(defaultFilePath);
+}
+
+bool  Setting::save(const std::string & filePath)
+{
+    std::ofstream settingsFile;
+    settingsFile.open (filePath);
+
+    boost::archive::xml_oarchive arc(settingsFile);
+    arc << boost::serialization::make_nvp("Setting", *this );
+
+    settingsFile.close();
+    return true;
+}
 
 }}

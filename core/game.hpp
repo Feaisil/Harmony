@@ -30,6 +30,9 @@ class Game
 public:
     Game(const Setting& settings);
 
+    const std::vector<boost::shared_ptr<Player> > &getPlayers() const;
+    const board::Board& getBoard() const;
+
 private:
     Setting settings;
 

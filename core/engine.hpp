@@ -17,6 +17,8 @@ class Engine
 public:
     Engine(const Setting &settings);
     void operator()(int numberOfTurns);
+    const Game &getGame() const;
+
 private:
     State state;
     Game game;

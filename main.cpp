@@ -21,13 +21,14 @@ int main( int argc, char** argv)
 
         (*interface)();
 
-        harmony::core::Engine engine(interface->settings);
+        boost::shared_ptr<harmony::core::Engine> engine(new harmony::core::Engine(interface->settings));
+        interface->engine = engine;
 
-        arcInit << BOOST_SERIALIZATION_NVP(engine);
+        arcInit << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
-        engine(5);
+        (*engine)(5);
 
-        arcFinal << BOOST_SERIALIZATION_NVP(engine);
+        arcFinal << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
         logInit.close();
         logFinal.close();
