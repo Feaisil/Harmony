@@ -16,5 +16,9 @@ Player::Player(const Setting &settings, const PlayerSetting &playersSettings):
     settings(playersSettings)
 {
 }
+const board::Position& Player::getPosition() const
+{
+    return position;
+}
 
 }} // namespaces

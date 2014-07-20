@@ -232,5 +232,14 @@ void Position::operator()(common::Element element)
         direction = Direction::Center;
     }
 }
+Position::Direction Position::getDirection() const
+{
+    return direction;
+}
+
+size_t Position::getIndex() const
+{
+    return index;
+}
 
 }}} // namespaces

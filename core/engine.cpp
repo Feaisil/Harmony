@@ -12,7 +12,7 @@ Engine::Engine(const Setting &settings):
 void Engine::operator()(int numberOfTurns)
 {
     state = State::running;
-    for(int i = 0; i<numberOfTurns; ++i)
+    for(int i = 0; i<numberOfTurns and state == State::running; ++i)
     {
         boost::shared_ptr<harmony::core::Turn> turn(new harmony::core::Turn (game));
         (*turn)();
@@ -26,5 +26,10 @@ void Engine::operator()(int numberOfTurns)
         }
     }
 }
+const Game &Engine::getGame() const
+{
+    return game;
+}
+
 
 }}

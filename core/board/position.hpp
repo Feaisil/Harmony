@@ -17,14 +17,6 @@ class Board;
 struct Position
 {
 public:
-    Position();
-    /** Update with an input element */
-    void operator()(common::Element element);
-
-private:
-
-    friend class Board;
-    friend class harmony::core::Engine;
     enum class Direction{
         Center,
         Fire,
@@ -37,7 +29,22 @@ private:
         AetherEarth,
         Earth,
         EarthFire
-    } direction;
+    };
+
+    Position();
+    /** Update with an input element */
+    void operator()(common::Element element);
+
+    Direction getDirection() const;
+
+    size_t getIndex() const;
+
+private:
+
+    Position( const Position& p){}
+    friend class Board;
+    friend class harmony::core::Engine;
+    Direction direction;
     size_t index;
 
     friend class boost::serialization::access;

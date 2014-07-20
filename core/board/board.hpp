@@ -26,6 +26,8 @@ protected:
 private:
     /// Members
 public:
+    const BalancePoint& getBalancePoint() const;
+
 protected:
 private:
     BalancePoint balancePoint;
