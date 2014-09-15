@@ -17,14 +17,16 @@ namespace events{
 class Event;
 class ChooseAction;
 class AddChosenAction;
+class DrawDisharmony;
 }
 
 class Turn
 {
 public:
-    Turn(Game& game);
+    Turn(const boost::weak_ptr<Game>& game);
     void operator()();
 private:
+    void processEvents();
     void operator<<(boost::shared_ptr<events::Event>& event);
 
 private:
@@ -33,8 +35,11 @@ private:
     /** The following is to be used for replay */
     std::list<boost::shared_ptr<events::Event>> executedEvents;
 
+    boost::weak_ptr<Game> game;
+
     friend class events::ChooseAction;
     friend class events::AddChosenAction;
+    friend class events::DrawDisharmony;
 
     Turn(){} // Default constructor for boost serialization
     friend class boost::serialization::access;template<class Archive>
@@ -42,6 +47,7 @@ private:
     {
         ar & BOOST_SERIALIZATION_NVP(remainingEvents);
         ar & BOOST_SERIALIZATION_NVP(executedEvents);
+        ar & BOOST_SERIALIZATION_NVP(game);
     }
 };
 

@@ -10,7 +10,7 @@ namespace harmony{ namespace core{ namespace events{
 class ChooseAction : public Event
 {
 private:
-    ChooseAction(Game &game,Turn& turn);
+    ChooseAction(const boost::weak_ptr<Game> &game,Turn& turn);
     virtual void trigger();
 private:
     Turn& turn;

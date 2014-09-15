@@ -8,10 +8,8 @@ class SettingInterface
 {
 public:
     SettingInterface();
-
+    virtual ~SettingInterface(){}
     harmony::core::Setting settings;
-
-
 };
 
 }}}

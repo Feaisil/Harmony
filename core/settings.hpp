@@ -9,6 +9,8 @@
 namespace harmony{ namespace core{
 
 class PlayerSetting;
+class HarmonyCard;
+class DisharmonyCard;
 
 class Setting
 {
@@ -17,31 +19,38 @@ public:
     std::list<boost::shared_ptr<harmony::core::PlayerSetting> > playersSettings;
     bool isParallel;
 
-    short harmonyInHand;
-    short boardSize;
-    short distanceFromStart;
-    short numberOfPlayers;
+    int numberOfPlayers;
+
+    int harmonyInHand;
+    int boardSize;
+    int distanceFromStart;
+    int startingDisharmonyDraw;
+    int disharmonyDraw;
+    int removedDisharmonyPerPlayer;
+
+    int startingEnergy;
+    int maxEnergy;
+    int restEnergyRate;
+    int feedingEnergyRate;
+    int feedingBeverageCost;
+    int feedingMealCost;
+    int passiveEnergyResplenishmentRate;
+
+    int startingBeverage;
+    int maxBeverage;
+    int beverageProductionRate;
+    int beverageProductionEnergyCost;
+
+    int startingMeal;
+    int maxMeal;
+    int mealProductionRate;
+    int mealProductionEnergyCost;
 
 
-    short startingEnergy;
-    short maxEnergy;
-    short restEnergyRate;
-    short feedingEnergyRate;
-    short feedingBeverageCost;
-    short feedingMealCost;
-    short passiveEnergyResplenishmentRate;
-
-    short startingBeverage;
-    short maxBeverage;
-    short beverageProductionRate;
-    short beverageProductionEnergyCost;
-
-    short startingMeal;
-    short maxMeal;
-    short mealProductionRate;
-    short mealProductionEnergyCost;
-
-    short EofDisharmony; // ?
+    std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
+    std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDeckTier1;
+    std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDeckTier2;
+    std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDeckTier3;
 
     static const std::string defaultFilePath;
 public:
@@ -64,11 +73,14 @@ public:
         ar & BOOST_SERIALIZATION_NVP(playersSettings);
         ar & BOOST_SERIALIZATION_NVP(isParallel);
 
+        ar & BOOST_SERIALIZATION_NVP(numberOfPlayers);
+
         ar & BOOST_SERIALIZATION_NVP(harmonyInHand);
         ar & BOOST_SERIALIZATION_NVP(boardSize);
         ar & BOOST_SERIALIZATION_NVP(distanceFromStart);
-        ar & BOOST_SERIALIZATION_NVP(numberOfPlayers);
-
+        ar & BOOST_SERIALIZATION_NVP(startingDisharmonyDraw);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDraw);
+        ar & BOOST_SERIALIZATION_NVP(removedDisharmonyPerPlayer);
 
         ar & BOOST_SERIALIZATION_NVP(startingEnergy);
         ar & BOOST_SERIALIZATION_NVP(maxEnergy);
@@ -88,7 +100,10 @@ public:
         ar & BOOST_SERIALIZATION_NVP(mealProductionRate);
         ar & BOOST_SERIALIZATION_NVP(mealProductionEnergyCost);
 
-        ar & BOOST_SERIALIZATION_NVP(EofDisharmony); // ?
+        ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDeckTier1);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDeckTier2);
+        ar & BOOST_SERIALIZATION_NVP(disharmonyDeckTier3);
     }
 };
 

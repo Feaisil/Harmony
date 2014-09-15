@@ -12,6 +12,7 @@ void Position::operator()(common::Element element)
     switch(direction)
     {
     case Direction::Center:
+        index ++;
         switch(element)
         {
         case common::Element::Fire:
@@ -32,7 +33,6 @@ void Position::operator()(common::Element element)
         default:
             break;
         }
-        index ++;
         break;
     case Direction::Fire:
         switch(element)
@@ -116,7 +116,7 @@ void Position::operator()(common::Element element)
         case common::Element::Fire:
             index --;
         case common::Element::Wind:
-            direction = Direction::FireWind;
+            direction = Direction::WindWater;
             break;
         case common::Element::Water:
             index ++;
@@ -124,7 +124,7 @@ void Position::operator()(common::Element element)
         case common::Element::Earth:
             index --;
         case common::Element::Aether:
-            direction = Direction::WindWater;
+            direction = Direction::WaterAether;
             break;
         default:
             break;
@@ -142,7 +142,7 @@ void Position::operator()(common::Element element)
             index ++;
         case common::Element::Earth:
         case common::Element::Fire:
-            direction = Direction::Earth;
+            direction = Direction::Aether;
             break;
         default:
             break;
@@ -232,12 +232,13 @@ void Position::operator()(common::Element element)
         direction = Direction::Center;
     }
 }
+
 Position::Direction Position::getDirection() const
 {
     return direction;
 }
 
-size_t Position::getIndex() const
+int Position::getIndex() const
 {
     return index;
 }

@@ -26,12 +26,14 @@ int main( int argc, char** argv)
 
         arcInit << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
-        (*engine)(5);
+        (*engine)();
 
         arcFinal << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
         logInit.close();
         logFinal.close();
+
+        interface->displayFinalState();
     }
 
     return 0;

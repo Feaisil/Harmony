@@ -2,7 +2,7 @@
 
 namespace harmony{ namespace core{ namespace events{
 
-Event::Event(Game &game):
+Event::Event(const boost::weak_ptr<Game> &game):
     game(game)
 {
 
