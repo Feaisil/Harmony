@@ -8,3 +8,9 @@ object_script.Harmony.*
 syntax: glob
 Boost/*
 boost/*
+Harmony.dvi
+Harmony.log
+Harmony.pdf
+Harmony.toc
+harmony.png
+latex.lnk
