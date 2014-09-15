@@ -6,7 +6,7 @@
 
 namespace harmony{ namespace core{ namespace events{
 
-PureHarmony::PureHarmony(Game & game, const boost::weak_ptr<Player> & player, common::Element element):
+PureHarmony::PureHarmony(const boost::weak_ptr<Game>& game, const boost::weak_ptr<Player> & player, common::Element element):
     Event(game),
     player(player),
     element(element)
@@ -15,8 +15,9 @@ PureHarmony::PureHarmony(Game & game, const boost::weak_ptr<Player> & player, co
 
 void PureHarmony::trigger()
 {
-    game.board(player.lock()->position, element);
-    game.board(game.board.balancePoint, element);
+    boost::shared_ptr<Game> gameLock = game.lock();
+    gameLock->board(player.lock()->position, element);
+    gameLock->board(gameLock->board.balancePoint, element);
 }
 
 }}} // namespaces

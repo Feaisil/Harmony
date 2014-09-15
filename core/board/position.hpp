@@ -37,15 +37,13 @@ public:
 
     Direction getDirection() const;
 
-    size_t getIndex() const;
+    int getIndex() const;
 
 private:
-
-    Position( const Position& p){}
     friend class Board;
     friend class harmony::core::Engine;
     Direction direction;
-    size_t index;
+    int index;
 
     friend class boost::serialization::access;
     template<class Archive>

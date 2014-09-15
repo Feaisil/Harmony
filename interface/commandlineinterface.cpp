@@ -1,5 +1,6 @@
 #include "commandlineinterface.hpp"
 #include "core/engine.hpp"
+#include "core/disharmonycard.hpp"
 
 namespace harmony{ namespace interface{
 
@@ -93,12 +94,39 @@ void CommandLineInterface::operator()()
 
     for(int i=0; i<settings.numberOfPlayers; ++i)
     {
+        std::cout << "========================" << std::endl
+                     << "- " << i << std::endl;
         getPlayerSettings();
     }
 }
 
+void CommandLineInterface::displayFinalState() const
+{
+    std::cout << "========================" << std::endl
+        << "= End of game =" << std::endl
+        << "========================" << std::endl;
+    displayBoard();
+    switch(engine->getGame().getStatus())
+    {
+    case core::Game::Status::lost:
+        std::cout << "Game lost!" << std::endl;
+        break;
+    case core::Game::Status::finished:
+        std::cout << "Game finished!" << std::endl;
+        displayScore();
+        break;
+    case core::Game::Status::ongoing:
+        std::cout << "Game ongoin..." << std::endl;
+        break;
+    default:break;
+
+    }
+
+}
+
 core::common::Element CommandLineInterface::choosePureHarmony(boost::shared_ptr<harmony::core::Player> & player) const
 {
+    std::cout << "========================" << std::endl;
     displayBoard();
     std::cout << player->accessSettings().name << std::endl;
     short result;
@@ -124,60 +152,102 @@ core::common::Element CommandLineInterface::choosePureHarmony(boost::shared_ptr<
     }
     return core::common::Element::Fire;
 }
+void displayPlayer(const std::string & name, const core::board::Position& position)
+{
+    std::cout << " - " << name << " @ " ;
+    switch(position.getDirection())
+    {
+    case harmony::core::board::Position::Direction::Fire:
+            std::cout << "Fire";
+            break;
+    case harmony::core::board::Position::Direction::FireWind:
+            std::cout << "Fire-Wind";
+            break;
+    case harmony::core::board::Position::Direction::Wind :
+        std::cout << "Wind";
+        break;
+    case harmony::core::board::Position::Direction::WindWater :
+        std::cout << "Wind-Water";
+        break;
+    case harmony::core::board::Position::Direction::Water :
+        std::cout << "Water";
+        break;
+    case harmony::core::board::Position::Direction::WaterAether :
+        std::cout << "Water-Aether";
+        break;
+    case harmony::core::board::Position::Direction::Aether :
+        std::cout << "Aether";
+        break;
+    case harmony::core::board::Position::Direction::AetherEarth :
+        std::cout << "Aether-Earth";
+        break;
+    case harmony::core::board::Position::Direction::Earth :
+        std::cout << "Earth";
+        break;
+    case harmony::core::board::Position::Direction::EarthFire :
+        std::cout << "Earth-Fire";
+        break;
+    case harmony::core::board::Position::Direction::Center :
+    default:
+        std::cout << "Center";
+    }
+    std::cout << "[" << position.getIndex() << "]" << std::endl;
+}
+
+
 
 void CommandLineInterface::displayBoard() const
 {
-    static const int spacing = 2;
-    static const std::string nodeChar("O"),spacingChar("*"), emptyChar(" ");
-    std::cout << "Game board:"<<std::endl;
-    for(int i = 0; i < settings.boardSize * 2 * spacing; ++i)
-    {
-        std::cout << "=";
-    }
-    std::cout << std::endl;
-    for(int i = 0; i < settings.boardSize * 2 * spacing; ++i)
-    {
-        for(int j = 0; j < settings.boardSize * 2 * spacing; ++j)
-        {
-            // direction north, fire
-            if( (j == settings.boardSize * spacing) and (i > settings.boardSize * spacing))
-            {
-                if(j % spacing == 0)
-                {
-                    std::cout << nodeChar;
-                }
-                else
-                {
-                    bool playerFound = false;
-                    for(auto player:engine->getGame().getPlayers())
-                    {
-                        if(player->getPosition().getDirection() == harmony::core::board::Position::Direction::Fire
-                                and player->getPosition().getIndex() == i/spacing)
-                        {
-                            std::cout << player->accessSettings().name.empty()? "X": player->accessSettings().name.substr(0,1);
-                            playerFound = true;
-                        }
-                    }
-                    if(not playerFound)
-                    {
-                        engine->getGame().getBoard().getBalancePoint().getDirection() == harmony::core::board::Position::Direction::Fire;
-                        std::cout << spacingChar;
-                    }
-                }
-            }/*
-            else
-            {
-                std::cout << emptyChar;
-            }*/
-        }
-        std::cout << std::endl;
-    }
+    displayDisharmony();
 
-    for(int i = 0; i < settings.boardSize * 2 * spacing; ++i)
+    std::cout << "Game board:"  <<std::endl;
+
+    std::cout << "Size = " << settings.boardSize << std::endl;
+    displayPlayer("Balance point", engine->getGame().getBoard().getBalancePoint());
+    if(not engine->getGame().getEliminatedPlayers().empty())
     {
-        std::cout << "=";
+        std::cout << "Eliminated players: " << std::endl;
+        for(auto player: engine->getGame().getEliminatedPlayers())
+        {
+            displayPlayer(player->accessSettings().name, player->getPosition());
+        }
+    }
+    if(not engine->getGame().getPlayers().empty())
+    {
+        std::cout << "Players: "<< std::endl;
+        for(auto player: engine->getGame().getPlayers())
+        {
+            displayPlayer(player->accessSettings().name, player->getPosition());
+        }
     }
     std::cout << std::endl;
 }
-
+void CommandLineInterface::displayScore() const
+{
+    if(not engine->getGame().getEliminatedPlayers().empty())
+    {
+        std::cout << "Eliminated players: " << std::endl;
+        for(auto player: engine->getGame().getEliminatedPlayers())
+        {
+            std::cout << " - " << player->accessSettings().name << std::endl;
+        }
+    }
+    if(not engine->getGame().getPlayers().empty())
+    {
+        std::cout << "Winning players scores: " << std::endl;
+        for(auto player: engine->getGame().getPlayers())
+        {
+            std::cout << "Player " << player->accessSettings().name << " : " << engine->getGame().getBoard().ComputeScore(player->getPosition()) << std::endl;
+        }
+    }
+}
+void CommandLineInterface::displayDisharmony() const
+{
+    std::cout << "last disharmony: " << std::endl;
+    int i = 0;
+    for( std::list<boost::shared_ptr<core::DisharmonyCard>>::const_reverse_iterator it = engine->getGame().getDisharmonyDiscard().rbegin(); it != engine->getGame().getDisharmonyDiscard().rend() and i < settings.disharmonyDraw; ++it, ++i )
+    {
+        std::cout << (*it)->getName() << std::endl;
+    }
+}
 }}

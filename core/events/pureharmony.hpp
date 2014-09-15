@@ -13,7 +13,7 @@ class AddChosenAction;
 class PureHarmony : public Event
 {
 public:
-    PureHarmony(Game & game, const boost::weak_ptr<Player> & player, common::Element element);
+    PureHarmony(const boost::weak_ptr<Game>& game, const boost::weak_ptr<Player> & player, common::Element element);
 private:
     virtual void trigger();
 private:

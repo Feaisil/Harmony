@@ -17,6 +17,7 @@ namespace harmony{ namespace core{
 namespace events{
 class Event;
 class PureHarmony;
+class MoveAllTowardsElement;
 }
 
 namespace interface{
@@ -69,6 +70,7 @@ private:
 
     friend class events::Event;
     friend class events::PureHarmony;
+    friend class events::MoveAllTowardsElement;
     friend class Game;
     friend class Engine;
     friend class PlayerInterface;

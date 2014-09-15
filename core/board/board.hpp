@@ -8,6 +8,7 @@
 namespace harmony{ namespace core{
 namespace events{
 class PureHarmony;
+class MoveAllTowardsElement;
 }
 namespace board{
 
@@ -27,13 +28,14 @@ private:
     /// Members
 public:
     const BalancePoint& getBalancePoint() const;
-
+    int ComputeScore(const Position& position) const;
 protected:
 private:
     BalancePoint balancePoint;
     unsigned int size;
 
     friend class events::PureHarmony;
+    friend class events::MoveAllTowardsElement;
 
     friend class boost::serialization::access;
     template<class Archive>

@@ -16,12 +16,12 @@ class Engine
 
 public:
     Engine(const Setting &settings);
-    void operator()(int numberOfTurns);
+    void operator()();
     const Game &getGame() const;
 
 private:
     State state;
-    Game game;
+    boost::shared_ptr<Game> game;
     std::list<boost::shared_ptr<Turn>> executedTurns;
 
     Engine(){}

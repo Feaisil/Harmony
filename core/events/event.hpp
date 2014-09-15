@@ -14,21 +14,24 @@ class Turn;
 class Game;
 
 namespace events{
+class DrawDisharmony;
 
 class Event
 {
+public:
+    virtual ~Event(){}
 protected:
-    Event(Game& game);
-    Event();
+    Event(const boost::weak_ptr<Game>&  game);
+    Event(){}
     virtual void trigger (){}
     virtual void replay (){ trigger(); }
 
 protected:
-    Game& game;
+    boost::weak_ptr<Game> game;
 
 private:
-private:
     friend class ::harmony::core::Turn;
+    friend class DrawDisharmony;
 
     friend class boost::serialization::access;
     template<class Archive>
@@ -39,3 +42,4 @@ private:
 };
 
 }}} // namespaces
+

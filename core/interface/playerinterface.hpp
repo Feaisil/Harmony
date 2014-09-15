@@ -13,6 +13,7 @@ class PlayerInterface
 {
 public:
     PlayerInterface();
+    virtual ~PlayerInterface(){}
 
     virtual common::Element choosePureHarmony(boost::shared_ptr<harmony::core::Player> & player) const = 0;
     // Choose Action

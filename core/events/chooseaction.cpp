@@ -27,37 +27,11 @@ struct DoChooseAction
     _returnType operator()(boost::shared_ptr<Player> & player, _argumentType& args)
     {
         return player->accessSettings().interface->choosePureHarmony(player);
-//        static boost::random::mt19937 gen;
-//        static boost::random::uniform_int_distribution<> dist(0, 4);
-
-
-//        int decision = dist(gen);//TODO Replace by call to player interface
-
-//        if( decision == 0 )
-//        {
-//            return common::Element::Fire;
-//        }
-//        if( decision == 1 )
-//        {
-//            return common::Element::Wind;
-//        }
-//        if( decision == 2 )
-//        {
-//            return common::Element::Water;
-//        }
-//        if( decision == 3 )
-//        {
-//            return common::Element::Aether;
-//        }
-//        if( decision == 4 )
-//        {
-//            return common::Element::Earth;
-//        }
     }
 
 };
 
-ChooseAction::ChooseAction(Game& game, Turn &turn):
+ChooseAction::ChooseAction(const boost::weak_ptr<Game>& game, Turn &turn):
     Event(game),
     turn(turn)
 {
@@ -66,12 +40,14 @@ ChooseAction::ChooseAction(Game& game, Turn &turn):
 
 void ChooseAction::trigger()
 {
-    SimultaneousQuery<DoChooseAction> query (game.settings.isParallel);
+    boost::shared_ptr<Game> gameLock = game.lock();
+    SimultaneousQuery<DoChooseAction> query (gameLock->settings.isParallel);
     DoChooseAction::Args args;
-    std::vector<typename DoChooseAction::_returnType> result = query(game.players, args);
-    for(size_t index = 0; index < game.players.size(); ++index)
+
+    std::vector<typename DoChooseAction::_returnType> result = query(gameLock->players, args);
+    for(size_t index = 0; index < gameLock->players.size(); ++index)
     {
-        boost::shared_ptr<Event> event(new PureHarmony(game, game.players[index], result[index]));
+        boost::shared_ptr<Event> event(new PureHarmony(game, gameLock->players.at(index), result.at(index)));
         turn << event;
     }
 }

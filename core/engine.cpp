@@ -3,32 +3,31 @@
 namespace harmony{ namespace core{
 
 Engine::Engine(const Setting &settings):
-    state(State::initialized),
-    game(settings)
-{
+    state(State::initialized)
 
+{
+    game.reset(new Game(settings));
 }
 
-void Engine::operator()(int numberOfTurns)
+void Engine::operator()()
 {
     state = State::running;
-    for(int i = 0; i<numberOfTurns and state == State::running; ++i)
+    game->status = Game::Status::ongoing;
+    // TODO remove turn count (temporary end condition)
+    while(state == State::running)
     {
         boost::shared_ptr<harmony::core::Turn> turn(new harmony::core::Turn (game));
         (*turn)();
         executedTurns.push_back(turn);
-        for(std::vector<boost::shared_ptr<Player>>::const_iterator it = game.players.begin(); it != game.players.end(); ++it)
+        if(game->getStatus() != Game::Status::ongoing)
         {
-            if((*it)->position.index > 5)
-            {
-                state = State::ended;
-            }
+            state = State::ended;
         }
     }
 }
 const Game &Engine::getGame() const
 {
-    return game;
+    return *game;
 }
 
 
