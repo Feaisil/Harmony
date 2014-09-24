@@ -7,8 +7,9 @@
 
 namespace harmony{ namespace core{
 namespace events{
-class PureHarmony;
+class HarmoniousMeal;
 class MoveAllTowardsElement;
+class MovePlayerTowardsElement;
 }
 namespace board{
 
@@ -20,9 +21,10 @@ public:
 
     /// Functions
 public:
-    Board(unsigned int size);
+    Board( int size);
     /** Update a placement with an input element */
-    void operator()(Position& position, common::Element element) const;
+    void operator()(Position& position, common::Element element, bool negative = false) const;
+    void moveToCenter(Position& position) const;
 protected:
 private:
     /// Members
@@ -32,14 +34,16 @@ public:
 protected:
 private:
     BalancePoint balancePoint;
-    unsigned int size;
+    int size;
 
-    friend class events::PureHarmony;
+private:
+    friend class events::HarmoniousMeal;
     friend class events::MoveAllTowardsElement;
+    friend class events::MovePlayerTowardsElement;
 
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int )
     {
         ar & BOOST_SERIALIZATION_NVP(balancePoint);
         ar & BOOST_SERIALIZATION_NVP(size);

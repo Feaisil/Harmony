@@ -5,8 +5,10 @@
 
 
 namespace harmony{ namespace core{
-    class engine;
-    class disharmonycard;
+    class HarmonyCard;
+    namespace events{
+    class Event;
+    }
 }}
 
 namespace harmony{ namespace interface{
@@ -21,10 +23,15 @@ public:
 
     boost::shared_ptr<const harmony::core::Engine> engine;
  private:
-    /** \addtogroup player IHM
+    /** \addtogroup player interface pure virtual ilmplementation
      *  @{
      */
-    core::common::Element choosePureHarmony(boost::shared_ptr<harmony::core::Player> & player) const;
+    core::interface::Action chooseAction(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand) const;
+    std::list<boost::shared_ptr<core::HarmonyCard>> chooseCard(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand, core::interface::ChooseCardType type) const;
+    core::common::Element chooseHarmoniousMealDirection(const boost::shared_ptr<harmony::core::Player> & player) const;
+    boost::shared_ptr<core::events::PlayerEvent> chooseBetweenEvents(const boost::shared_ptr<harmony::core::Player> & player, std::vector<boost::shared_ptr<core::events::PlayerEvent>> & events) const ;
+    /** @}*/
+
 
     void getNumberOfPlayers();
     void getPlayerSettings();
@@ -33,7 +40,6 @@ public:
     void displayBoard() const;
     void displayScore() const;
     void displayDisharmony() const;
-    /** @}*/
 };
 
 }}

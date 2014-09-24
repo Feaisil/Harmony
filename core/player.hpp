@@ -3,6 +3,7 @@
 #include "settings.hpp"
 #include "board/position.hpp"
 #include "harmonycard.hpp"
+#include "modifier.hpp"
 
 #include "interface/playerinterface.hpp"
 
@@ -16,8 +17,16 @@ namespace harmony{ namespace core{
 
 namespace events{
 class Event;
-class PureHarmony;
+class HarmoniousMeal;
 class MoveAllTowardsElement;
+class MovePlayerTowardsElement;
+struct DoChooseAction;
+class ChooseAction;
+class Produce;
+class AddModifierToPlayer;
+class PlayHarmonyCards;
+class DestroyResource;
+class CheckForEndConditions;
 }
 
 namespace interface{
@@ -27,7 +36,6 @@ class PlayerInterface;
 class Player;
 class Game;
 class Setting;
-
 class PlayerSetting
 {
 public:
@@ -43,7 +51,7 @@ private:
     PlayerSetting(){}
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int)
     {
         ar & BOOST_SERIALIZATION_NVP(name);
         ar & BOOST_SERIALIZATION_NVP(element);
@@ -56,21 +64,38 @@ public:
     Player(const Setting &settings, const PlayerSetting &playerSettings);
 
     const PlayerSetting& accessSettings() const{ return settings; }
-    const board::Position& getPosition() const;
+    const board::Position& getPosition() const{ return position; }
+    int getBeverage() const{ return beverage; }
+    int getMeal() const{ return meal; }
+    int getEnergy() const{ return energy; }
+
+    const std::vector<Modifier>& getModifiers() const{ return modifiers; }
+    const std::vector<boost::shared_ptr<HarmonyCard>>& getPlayerBoard() const{ return playerBoard; }
+
 private:
     board::Position position;
-    std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
-    std::list<boost::shared_ptr<HarmonyCard>> playerBoard;
-    short energy;
-    short beverage;
-    short meal;
-    short score;
+    int energy;
+    int beverage;
+    int meal;
+    int score;
+    std::vector<boost::shared_ptr<HarmonyCard>> harmonyHand;
+    std::vector<boost::shared_ptr<HarmonyCard>> playerBoard;
+    std::vector<Modifier> modifiers;
 
     PlayerSetting settings;
 
+private:
     friend class events::Event;
-    friend class events::PureHarmony;
+    friend class events::HarmoniousMeal;
     friend class events::MoveAllTowardsElement;
+    friend class events::MovePlayerTowardsElement;
+    friend struct events::DoChooseAction;
+    friend class events::ChooseAction;
+    friend class events::Produce;
+    friend class events::AddModifierToPlayer;
+    friend class events::PlayHarmonyCards;
+    friend class events::DestroyResource;
+    friend class events::CheckForEndConditions;
     friend class Game;
     friend class Engine;
     friend class PlayerInterface;
@@ -78,14 +103,16 @@ private:
     Player(){}
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int )
     {
         ar & BOOST_SERIALIZATION_NVP(position);
-        ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
-        ar & BOOST_SERIALIZATION_NVP(playerBoard);
         ar & BOOST_SERIALIZATION_NVP(energy);
         ar & BOOST_SERIALIZATION_NVP(beverage);
         ar & BOOST_SERIALIZATION_NVP(meal);
+        ar & BOOST_SERIALIZATION_NVP(score);
+        ar & BOOST_SERIALIZATION_NVP(harmonyHand);
+        ar & BOOST_SERIALIZATION_NVP(playerBoard);
+        ar & BOOST_SERIALIZATION_NVP(modifiers);
         ar & BOOST_SERIALIZATION_NVP(settings);
     }
 

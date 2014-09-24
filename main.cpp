@@ -9,6 +9,8 @@
 
 int main( int argc, char** argv)
 {
+    (void) argc;
+    (void) argv;
     {
         std::ofstream logInit, logFinal;
         logInit.open ("initial.log");
@@ -24,11 +26,11 @@ int main( int argc, char** argv)
         boost::shared_ptr<harmony::core::Engine> engine(new harmony::core::Engine(interface->settings));
         interface->engine = engine;
 
-        arcInit << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
+//        arcInit << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
         (*engine)();
 
-        arcFinal << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
+//        arcFinal << boost::serialization::make_nvp(BOOST_PP_STRINGIZE(engine), *engine);
 
         logInit.close();
         logFinal.close();

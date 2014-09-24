@@ -18,6 +18,7 @@ class Event;
 class ChooseAction;
 class AddChosenAction;
 class DrawDisharmony;
+class PlayHarmonyCards;
 }
 
 class Turn
@@ -37,13 +38,15 @@ private:
 
     boost::weak_ptr<Game> game;
 
+private:
     friend class events::ChooseAction;
     friend class events::AddChosenAction;
     friend class events::DrawDisharmony;
+    friend class events::PlayHarmonyCards;
 
     Turn(){} // Default constructor for boost serialization
     friend class boost::serialization::access;template<class Archive>
-    void serialize(Archive & ar, const unsigned int version) const
+    void serialize(Archive & ar, const unsigned int ) const
     {
         ar & BOOST_SERIALIZATION_NVP(remainingEvents);
         ar & BOOST_SERIALIZATION_NVP(executedEvents);

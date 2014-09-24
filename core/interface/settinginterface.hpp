@@ -7,7 +7,7 @@ namespace harmony{ namespace core{ namespace interface{
 class SettingInterface
 {
 public:
-    SettingInterface();
+    SettingInterface(){}
     virtual ~SettingInterface(){}
     harmony::core::Setting settings;
 };

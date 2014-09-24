@@ -22,10 +22,15 @@ class Setting;
 namespace events{
 class Event;
 class ChooseAction;
-class PureHarmony;
-class EliminatePlayers;
+class HarmoniousMeal;
+class CheckForEndConditions;
 class DrawDisharmony;
 class MoveAllTowardsElement;
+class MovePlayerTowardsElement;
+class Produce;
+class AddModifierToGame;
+class PlayHarmonyCards;
+class DestroyResource;
 }
 
 class Game
@@ -49,13 +54,14 @@ public:
 private:
     Setting settings;
 
+    board::Board board;
     std::vector<boost::shared_ptr<Player>> players;
     std::vector<boost::shared_ptr<Player>> eliminatedPlayers;
-    board::Board board;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDeck;
     std::list<boost::shared_ptr<HarmonyCard>> harmonyDiscard;
     std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDeck;
     std::list<boost::shared_ptr<DisharmonyCard>> disharmonyDiscard;
+    std::list<Modifier> modifiers;
 
     Status status;
 
@@ -65,25 +71,31 @@ private:
     friend class Turn;
     friend class events::Event;
     friend class events::ChooseAction;
-    friend class events::PureHarmony;
-    friend class events::EliminatePlayers;
+    friend class events::HarmoniousMeal;
+    friend class events::CheckForEndConditions;
     friend class events::DrawDisharmony;
     friend class events::MoveAllTowardsElement;
+    friend class events::MovePlayerTowardsElement;
+    friend class events::Produce;
+    friend class events::AddModifierToGame;
+    friend class events::PlayHarmonyCards;
+    friend class events::DestroyResource;
 
     Game(): board(0){}
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int )
     {
         ar & BOOST_SERIALIZATION_NVP(settings);
 
+        ar & BOOST_SERIALIZATION_NVP(board);
         ar & BOOST_SERIALIZATION_NVP(players);
         ar & BOOST_SERIALIZATION_NVP(eliminatedPlayers);
-        ar & BOOST_SERIALIZATION_NVP(board);
         ar & BOOST_SERIALIZATION_NVP(harmonyDeck);
         ar & BOOST_SERIALIZATION_NVP(harmonyDiscard);
         ar & BOOST_SERIALIZATION_NVP(disharmonyDeck);
         ar & BOOST_SERIALIZATION_NVP(disharmonyDiscard);
+        ar & BOOST_SERIALIZATION_NVP(modifiers);
     }
 
 };

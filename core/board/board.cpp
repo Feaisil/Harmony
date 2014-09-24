@@ -2,16 +2,23 @@
 
 namespace harmony{ namespace core{ namespace board{
 
-Board::Board(unsigned int size):
+Board::Board(int size):
     size(size)
 {}
 
-void Board::operator()(Position& position, common::Element element) const
+void Board::operator()(Position& position, common::Element element, bool negative) const
 {
     // if placement is not at end move
     if(position.index < size)
     {
-        position(element);
+        position(element, negative);
+    }
+}
+void Board::moveToCenter(Position& position) const
+{
+    if(position.index < size)
+    {
+        position.moveToCenter();
     }
 }
 const BalancePoint &Board::getBalancePoint() const
