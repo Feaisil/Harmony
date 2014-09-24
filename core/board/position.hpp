@@ -33,8 +33,8 @@ public:
 
     Position();
     /** Update with an input element */
-    void operator()(common::Element element);
-
+    void operator()(common::Element element, bool negative = false);
+    void moveToCenter();
     Direction getDirection() const;
 
     int getIndex() const;
@@ -47,7 +47,7 @@ private:
 
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int )
     {
         ar & BOOST_SERIALIZATION_NVP(direction);
         ar & BOOST_SERIALIZATION_NVP(index);

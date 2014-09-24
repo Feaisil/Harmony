@@ -7,7 +7,7 @@ Position::Position():
     index(0)
 {}
 
-void Position::operator()(common::Element element)
+void Position::operator()(common::Element element, bool negative)
 {
     switch(direction)
     {
@@ -41,12 +41,18 @@ void Position::operator()(common::Element element)
             index ++;
             break;
         case common::Element::Water:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Wind:
             direction = Direction::FireWind;
             break;
         case common::Element::Aether:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Earth:
             direction = Direction::EarthFire;
             break;
@@ -59,13 +65,25 @@ void Position::operator()(common::Element element)
         {
         case common::Element::Fire:
             index ++;
+            direction = Direction::Fire;
+            break;
         case common::Element::Earth:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Fire;
             break;
         case common::Element::Wind:
             index ++;
+            direction = Direction::Wind;
+            break;
         case common::Element::Water:
         case common::Element::Aether:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Wind;
             break;
         default:
@@ -76,7 +94,10 @@ void Position::operator()(common::Element element)
         switch(element)
         {
         case common::Element::Earth:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Fire:
             direction = Direction::FireWind;
             break;
@@ -84,7 +105,10 @@ void Position::operator()(common::Element element)
             index ++;
             break;
         case common::Element::Aether:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Water:
             direction = Direction::WindWater;
             break;
@@ -97,13 +121,25 @@ void Position::operator()(common::Element element)
         {
         case common::Element::Wind:
             index ++;
+            direction = Direction::Wind;
+            break;
         case common::Element::Fire:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Wind;
             break;
         case common::Element::Water:
             index ++;
+            direction = Direction::Water;
+            break;
         case common::Element::Aether:
         case common::Element::Earth:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Water;
             break;
         default:
@@ -114,7 +150,10 @@ void Position::operator()(common::Element element)
         switch(element)
         {
         case common::Element::Fire:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Wind:
             direction = Direction::WindWater;
             break;
@@ -122,7 +161,10 @@ void Position::operator()(common::Element element)
             index ++;
             break;
         case common::Element::Earth:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Aether:
             direction = Direction::WaterAether;
             break;
@@ -135,13 +177,25 @@ void Position::operator()(common::Element element)
         {
         case common::Element::Water:
             index ++;
+            direction = Direction::Water;
+            break;
         case common::Element::Wind:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Water;
             break;
         case common::Element::Aether:
             index ++;
+            direction = Direction::Aether;
+            break;
         case common::Element::Earth:
         case common::Element::Fire:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Aether;
             break;
         default:
@@ -152,7 +206,10 @@ void Position::operator()(common::Element element)
         switch(element)
         {
         case common::Element::Wind:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Water:
             direction = Direction::WaterAether;
             break;
@@ -160,7 +217,10 @@ void Position::operator()(common::Element element)
             index ++;
             break;
         case common::Element::Fire:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Earth:
             direction = Direction::AetherEarth;
             break;
@@ -173,13 +233,25 @@ void Position::operator()(common::Element element)
         {
         case common::Element::Aether:
             index ++;
+            direction = Direction::Aether;
+            break;
         case common::Element::Water:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Aether;
             break;
         case common::Element::Earth:
             index ++;
+            direction = Direction::Earth;
+            break;
         case common::Element::Fire:
         case common::Element::Wind:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Earth;
             break;
         default:
@@ -190,7 +262,10 @@ void Position::operator()(common::Element element)
         switch(element)
         {
         case common::Element::Water:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Aether:
             direction = Direction::AetherEarth;
             break;
@@ -198,7 +273,10 @@ void Position::operator()(common::Element element)
             index ++;
             break;
         case common::Element::Wind:
-            index --;
+            if(not negative)
+            {
+                index --;
+            }
         case common::Element::Fire:
             direction = Direction::EarthFire;
             break;
@@ -211,13 +289,25 @@ void Position::operator()(common::Element element)
         {
         case common::Element::Fire:
             index ++;
+            direction = Direction::Fire;
+            break;
         case common::Element::Wind:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Fire;
             break;
         case common::Element::Earth:
             index ++;
+            direction = Direction::Earth;
+            break;
         case common::Element::Water:
         case common::Element::Aether:
+            if(negative)
+            {
+                index++;
+            }
             direction = Direction::Earth;
             break;
         default:
@@ -226,6 +316,17 @@ void Position::operator()(common::Element element)
         break;
     default:
         break;
+    }
+    if(index == 0)
+    {
+        direction = Direction::Center;
+    }
+}
+void Position::moveToCenter()
+{
+    if(index > 0)
+    {
+        --index;
     }
     if(index == 0)
     {

@@ -5,7 +5,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/list.hpp>
 
-#include "core/events/movealltowardselement.hpp"
+#include "core/events/movetowardselement.hpp"
 
 namespace harmony{ namespace core{
 
@@ -24,12 +24,13 @@ private:
     std::string name;
     std::list<boost::shared_ptr<events::Event>> events;
 
+private:
     friend class events::DrawDisharmony;
     friend class Setting;
 
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    void serialize(Archive & ar, const unsigned int )
     {
         ar.register_type(static_cast<events::MoveAllTowardsElement*>(NULL));
         ar & BOOST_SERIALIZATION_NVP(name);

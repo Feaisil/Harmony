@@ -10,10 +10,10 @@ class Player;
 namespace events{
 class AddChosenAction;
 
-class PureHarmony : public Event
+class HarmoniousMeal : public Event
 {
 public:
-    PureHarmony(const boost::weak_ptr<Game>& game, const boost::weak_ptr<Player> & player, common::Element element);
+    HarmoniousMeal(const boost::weak_ptr<Game>& game, const boost::weak_ptr<Player> & player, common::Element element);
 private:
     virtual void trigger();
 private:

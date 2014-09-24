@@ -1,7 +1,7 @@
 #include "turn.hpp"
 
 #include "events/chooseaction.hpp"
-#include "events/eliminateplayers.hpp"
+#include "events/checkforendconditions.hpp"
 #include "events/DrawDisharmony.hpp"
 #include "game.hpp"
 
@@ -26,20 +26,11 @@ void Turn::operator ()()
 //    (*this) << (resplenishEnergy);
 //    processEvents();
 
-    boost::shared_ptr<events::Event> eliminatePlayersEvent(new events::EliminatePlayers(game));
-    (*this) << (eliminatePlayersEvent);
-    //    boost::shared_ptr<events::Event> checkForEnd(new events::CheckForEnd(game));
-    //    (*this) << (checkForEnd);
+    boost::shared_ptr<events::Event> checkForEnd(new events::CheckForEndConditions(game));
+    (*this) << (checkForEnd);
     processEvents();
 
-    if(game.lock()->getBoard().getBalancePoint().getIndex() >= game.lock()->settings.boardSize)
-    {
-        game.lock()->status = Game::Status::lost;
-    }
-    else if(game.lock()->disharmonyDeck.empty())
-    {
-        game.lock()->status = Game::Status::finished;
-    }
+
 }
 void Turn::processEvents()
 {
