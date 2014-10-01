@@ -197,7 +197,7 @@ void CommandLineInterface::displayFinalState() const
     }
 
 }
-core::interface::Action CommandLineInterface::chooseAction(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand) const
+core::interface::Action CommandLineInterface::chooseAction(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand)
 {
     (void) player;
     std::cout << "========================" << std::endl;
@@ -251,7 +251,7 @@ core::interface::Action CommandLineInterface::chooseAction(const boost::shared_p
     }
     return core::interface::Action::Rest;
 }
-std::list<boost::shared_ptr<core::HarmonyCard>> CommandLineInterface::chooseCard(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand, core::interface::ChooseCardType type) const
+std::list<boost::shared_ptr<core::HarmonyCard>> CommandLineInterface::chooseCard(const boost::shared_ptr<harmony::core::Player> & player, const std::vector<boost::shared_ptr<core::HarmonyCard>> & harmonyHand, core::interface::ChooseCardType type)
 {
     std::list<boost::shared_ptr<core::HarmonyCard>> cards;
     std::cout << "========================" << std::endl;
@@ -305,7 +305,7 @@ std::list<boost::shared_ptr<core::HarmonyCard>> CommandLineInterface::chooseCard
     return cards;
 }
 
-core::common::Element CommandLineInterface::chooseHarmoniousMealDirection(const boost::shared_ptr<harmony::core::Player> & player) const
+core::common::Element CommandLineInterface::chooseHarmoniousMealDirection(const boost::shared_ptr<harmony::core::Player> & player)
 {
     std::cout << "========================" << std::endl;
     displayBoard();
@@ -335,7 +335,7 @@ core::common::Element CommandLineInterface::chooseHarmoniousMealDirection(const 
     }
     return core::common::Element::Fire;
 }
-boost::shared_ptr<core::events::PlayerEvent> CommandLineInterface::chooseBetweenEvents(const boost::shared_ptr<harmony::core::Player> & player, std::vector<boost::shared_ptr<core::events::PlayerEvent>> & events) const
+boost::shared_ptr<core::events::PlayerEvent> CommandLineInterface::chooseBetweenEvents(const boost::shared_ptr<harmony::core::Player> & player, std::vector<boost::shared_ptr<core::events::PlayerEvent>> & events)
 {
 
     boost::shared_ptr<core::events::PlayerEvent> event;
