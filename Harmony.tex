@@ -33,30 +33,30 @@
 \begin{document}
 
 \title{Harmonie}
-\author{Pâris MEULEMAN}
+\author{PÃ¢ris MEULEMAN}
 \maketitle
 \newpage
 \tableofcontents
 \newpage
 
-\section{Résumé des règles}
+\section{RÃ©sumÃ© des rÃ¨gles}
 \subsection{Mise en place}
 	\begin{itemize}
 		\item Disposer le plateau principal au centre.
-		\item Placer le pion \em{Équilibre} au centre du plateau.
-		\item Mélanger le tas \em{Harmonie} et le placer a coté du plateau central.
-		\item Préparer le tas \em{Disharmonie}:
+		\item Placer le pion \em{Ã‰quilibre} au centre du plateau.
+		\item MÃ©langer le tas \em{Harmonie} et le placer a cotÃ© du plateau central.
+		\item PrÃ©parer le tas \em{Disharmonie}:
 		\begin{itemize}
-			\item Mélanger chaque étage indépendamment.
-			\item Retirer \removedDisharmoniesPerPlayer carte par joueurs en dessous de 5 a chaque étage.
-			\item Disposer les étages les un sur les autre dans un ordre décroissant.
+			\item MÃ©langer chaque Ã©tage indÃ©pendamment.
+			\item Retirer \removedDisharmoniesPerPlayer carte par joueurs en dessous de 5 a chaque Ã©tage.
+			\item Disposer les Ã©tages les un sur les autre dans un ordre dÃ©croissant.
 		\end{itemize}
 		\item Chaque joueur:
 		\begin{itemize}
 			\item Choisi une couleur.
-			\item Place son pion sur le plateau central (sur son élément à \distanceFromStart du centre).
-			\item Récupère le plateau individuel et les cartes actions associés a son élément.
-			\item Place les marqueurs de ressources sur leur position de départ (\startingEnergy Énergies, \startingBeverage Boissons, \startingMeal Repas).
+			\item Place son pion sur le plateau central (sur son Ã©lÃ©ment Ã  \distanceFromStart du centre).
+			\item RÃ©cupÃ¨re le plateau individuel et les cartes actions associÃ©s a son Ã©lÃ©ment.
+			\item Place les marqueurs de ressources sur leur position de dÃ©part (\startingEnergy Ã‰nergies, \startingBeverage Boissons, \startingMeal Repas).
 			\item Pioche \harmonyInHand cartes \em{Harmonies}.
 		\end{itemize}
 		\item Piocher \startingDisharmonyDraw cartes Disharmonie.
@@ -67,20 +67,21 @@
 		\begin{itemize}
 			\item Jouer des cartes \em{Harmonie}.
 			\item Remplacer des cartes \em{Harmonie}.
-			\item Produire \beverageProductionRate boissons pour un coût de \beverageProductionEnergyCost énergies.
-			\item Produire \mealProductionRate repas pour un coût de \mealProductionEnergyCost énergies.
-			\item Se reposer pour gagner \restEnergyRate énergies.
-			\item Boire \feedingBeverageCost boissons et manger \feedingMealCost pour gagner \feedingEnergyRate énergies.
+			\item Produire \beverageProductionRate boissons pour un coÃ»t de \beverageProductionEnergyCost Ã©nergies.
+			\item Produire \mealProductionRate repas pour un coÃ»t de \mealProductionEnergyCost Ã©nergies.
+			\item Se reposer pour gagner \restEnergyRate Ã©nergies.
+			\item Boire \feedingBeverageCost boissons et manger \feedingMealCost pour gagner \feedingEnergyRate Ã©nergies.
 		\end{itemize}
-		\item Chaque joueur exécute l'action choisie.
-		\item Chaque joueur regagne \passiveEnergyResplenishmentRate énergies.
+		\item Chaque joueur exÃ©cute l'action choisie.
+		\item Chaque joueur regagne \passiveEnergyResplenishmentRate Ã©nergies.
 		\item Piocher \disharmonyDraw \em{Disharmonies}.
 	\end{itemize}
 	\subsection{Fin du jeu}
 	\begin{itemize}
-		\item Si le pion d'un joueur atteins une des extrémités du plateau, il est immédiatement éliminé.
-		\item Si le pion \em{Équilibre} atteins une des extrémités du plateau, le monde (et le jeu) est perdu pour tous.
-		\item S'il n'y a plus de carte \em{Disharmonie}, les joueurs non éliminés ont gagné, chaque joueur marque: un nombre de point égal à sa distance de l'extrémité du plateau la plus proche, ainsi qu'un nombre de point égal à 20 moins sa distance au pion \em{Équilibre}.
+		\item Si le pion d'un joueur atteins une des extrÃ©mitÃ©s du plateau, il est immÃ©diatement Ã©liminÃ©.
+		\item Si le pion \em{Ã‰quilibre} atteins une des extrÃ©mitÃ©s du plateau, le monde (et le jeu) est perdu pour tous sauf :
+		\item Si le joueur correspondant Ã  l'extrÃ©mitÃ© atteinte par le pion \em{Ã‰quilibre} est encore dans la partie. Auquel cas ce joueur est le seul gagnant. 
+		\item S'il n'y a plus de carte \em{Disharmonie}, les joueurs non Ã©liminÃ©s ont gagnÃ©, chaque joueur marque: un nombre de point Ã©gal Ã  sa distance de l'extrÃ©mitÃ© du plateau la plus proche, ainsi qu'un nombre de point Ã©gal Ã  20 moins sa distance au pion \em{Ã‰quilibre}.
 	\end{itemize}
 \end{document}
 		
