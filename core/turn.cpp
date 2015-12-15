@@ -2,7 +2,7 @@
 
 #include "events/chooseaction.hpp"
 #include "events/checkforendconditions.hpp"
-#include "events/DrawDisharmony.hpp"
+#include "events/drawdisharmony.hpp"
 #include "game.hpp"
 
 namespace harmony{ namespace core{

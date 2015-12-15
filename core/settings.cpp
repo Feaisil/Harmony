@@ -8,12 +8,12 @@
 
 #include "settings.hpp"
 #include "game.hpp"
-#include "DisharmonyCard.hpp"
+#include "disharmonycard.hpp"
 #include "events/movetowardselement.hpp"
 #include "events/addmodifier.hpp"
 #include "events/destroyressource.hpp"
 #include "modifier.hpp"
-#include "HarmonyCard.hpp"
+#include "harmonycard.hpp"
 
 
 namespace harmony{ namespace core{

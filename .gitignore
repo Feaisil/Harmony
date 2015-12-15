@@ -1,11 +1,12 @@
-
-syntax: regexp
-.*\.(o|exe|dll|so|a)
+**/*.o
+**/*.swp
+**/*.a
+**/*.orig
+Harmony.aux
 Harmony.pro.user.*
-Makefile.*
+Makefile*
 harmony-boardgame.pro.user
 object_script.Harmony.*
-syntax: glob
 Boost/*
 boost/*
 Harmony.dvi

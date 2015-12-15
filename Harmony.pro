@@ -3,8 +3,8 @@ CONFIG -= qt core
 CONFIG += c++11 staticlib
 
 QMAKE_CXXFLAGS += -std=c++11\
-    -isystem $$PWD\boost
-INCLUDEPATH += . .\boost
+    -isystem $$PWD/boost
+INCLUDEPATH += . ./boost
 
 SOURCES += main.cpp \
     core/board/board.cpp \

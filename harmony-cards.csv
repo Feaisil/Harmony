@@ -1,3 +1,19 @@
+(\d*),(\d*),(\d*),(\d*),([^,]*),([^,]*).*
+{\n    boost::shared_ptr<HarmonyCard> harmonyCard\(new HarmonyCard\(\)\);\n    harmonyCard->name="\5";\n    harmonyCard->priority=\1;\n    harmonyCard->energyCost=\2;\n    harmonyCard->beverageCost=\3;\n    harmonyCard->mealCost=\4;\n    {\n        \6\n    }\n    harmonyDeck.push_back\(harmonyCard\);\n}\n
+        (\w*)\[(\w*)=([a-zA-Z0-9:]*)\]
+        {\n            boost::shared_ptr<events::\1> event\(new events::\1\(\)\);\n            event->\2=\3;\n            harmonyCard->events.push_back\(boost::static_pointer_cast<core::events::PlayerEvent>\(event\)\);\n        }
+;(\w*)\[(\w*)=([a-zA-Z0-9:]*)\];?
+\n        {\n            boost::shared_ptr<events::\1> event\(new events::\1\(\)\);\n            event->\2=\3;\n            harmonyCard->events.push_back\(boost::static_pointer_cast<core::events::PlayerEvent>\(event\)\);\n        }
+
+
+disharmony
+(\d*),(\d*),([^,]*),(.*)
+for\(int i = 0; i < \2; ++i\)\n{\n    boost::shared_ptr<DisharmonyCard> disharmonyCard\(new DisharmonyCard\(\)\);\n    disharmonyCard->name="\3";\n    {\n        \4\n    }\n    disharmonyDeckTier\1.push_back\(disharmonyCard\);\n}
+(\w*)\[([^;]*);?([^\]]*)\];?
+{\n            boost::shared_ptr<events::\1> event\(new events::\1\(\)\);\n            event->\2;\n        >>>\3;\n            disharmonyCard->events.push_back\(boost::static_pointer_cast<core::events::Event>\(event\)\);\n        }
+>>>([^;]*;)
+    event->\1
+
 count, priority, name, description, energy cost, beverage cost, meal cost
 5, 1-5, Move 1 element, Make your pawn and the Balance pawn move towards one element, 3, 0, 0
 5, 6-10, Move 1 element, Make your pawn and the Balance pawn move towards one element, 0, 4, 0
@@ -8,6 +24,7 @@ count, priority, name, description, energy cost, beverage cost, meal cost
 5, 31-35, Move 2 sequential elements counter-clockwise, Make your pawn and the Balance pawn move towards two consecutive elements (In card's order), 2, 0, 2
 5, 36-40, Move 2 chosen order elements, Make your pawn and the Balance pawn move towards two elements (you choose the order), 2, 2, 2
 10, 41-50, Move 3 sequential or chosen order elements, Make your pawn and the Balance pawn move towards three elements (in card's order or add two energies to choose), 3, 3, 3
+//50
 3, 0, Harmony!, Moves all pawns towards the center by 1, 9, 7, 7
 3, 0, Farm, Increases your meal production by 2 or increases your meal production by 1 and your allies meal production by 1, 3, 2, 3
 3, 0, Breweries, Increases your beverage production by 3 or increases your beverage production by 2 and your allies beverage production by 1, 4, 3, 3
@@ -15,3 +32,4 @@ count, priority, name, description, energy cost, beverage cost, meal cost
 5, 0, Harmonious meal, Add this card to your action cards. You can now choose this action: consume one beverage and one meal to move your pawn (Alone!) in the direction of your choice, 3, 1, 1
 3, 0, Feather bed, When resting gain 2 more energies. Gain 1 more energy at the end of the turn, 6, 3, 2
 3, 0, Kitchen, When eating gain 4 more energies, 5, 3, 3
+// 75

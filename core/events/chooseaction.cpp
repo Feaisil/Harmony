@@ -1,5 +1,5 @@
 #include "chooseaction.hpp"
-#include "HarmoniousMeal.hpp"
+#include "harmoniousmeal.hpp"
 #include "produce.hpp"
 #include "playharmonycards.hpp"
 

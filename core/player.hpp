@@ -43,12 +43,12 @@ public:
     std::string name;
     common::Element element;
 
-    const interface::PlayerInterface* interface;
+    interface::PlayerInterface * const interface;
 private:
     friend class SettingInterface;
     friend class Player;
 
-    PlayerSetting(){}
+    PlayerSetting():interface(nullptr){}
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int)
