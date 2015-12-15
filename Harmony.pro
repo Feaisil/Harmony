@@ -1,10 +1,10 @@
-TEMPLATE = lib
+TEMPLATE = app lib
 CONFIG -= qt core
-CONFIG += c++11 staticlib
+CONFIG += c++11 
 
 QMAKE_CXXFLAGS += -std=c++11\
-    -isystem $$PWD/boost
-INCLUDEPATH += . ./boost
+    -isystem $$PWD/../boost
+INCLUDEPATH += . ../boost
 
 SOURCES += main.cpp \
     core/board/board.cpp \
@@ -58,6 +58,6 @@ HEADERS += \
     core/events/choosebetweenevents.hpp
 
 win32:LIBS += -L"F:\home\feaisil\Developments\harmony-boardgame\boost\lib" -lboost_serialization-mgw48-mt-1_55 -lboost_system-mgw48-mt-d-1_55 -lboost_thread-mgw48-mt-d-1_55
-unix: LIBS += -lboost_serialization
+unix: LIBS += -lboost_serialization -lboost_system -lboost_thread
 
 TARGET = Harmony
